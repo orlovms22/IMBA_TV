@@ -52,9 +52,10 @@ const uint32_t g_ADigitalPinMap[] =
   _PINNUM(0, 29),  // D20 is P0.29 (A5)
   _PINNUM(0, 31),  // D21 is P0.31 (A7)
 
-  // D22 .. D23
+  // D22 .. D24
   _PINNUM(0, 13),  // D22 is P0.13 (PWR EN)
-  _PINNUM(0, 4),  // D23 is P0.04 (A2, VBAT)
+  _PINNUM(0, 4),   // D23 is P0.04 (A2, VBAT)
+  _PINNUM(0, 27),  // D24 is P0.27 (phantom pin for LED_BLUE)
 };
 
 void initVariant()
