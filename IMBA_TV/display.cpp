@@ -26,6 +26,12 @@ void displaySetBrightness(uint8_t val)
   oled.setContrast(val);
 }
 
+void displaySetFlip(bool st)
+{
+  oled.flipH(st);
+  oled.flipV(st);
+}
+
 void displayDrawLogo()
 {
   oled.clear();
