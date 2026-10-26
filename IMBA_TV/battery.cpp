@@ -2,8 +2,10 @@
 #include <Arduino.h>
 
 static const uint16_t volt_critical = 3000; //mV
-static const uint16_t volt_low = 3300; //mV
-static const uint16_t volt_high = 4200; //mV
+static const uint16_t volt_low = 3100; //mV
+static const uint16_t volt_high = 4150; //mV
+static const uint16_t volt_step = 50; //mV
+static const uint8_t soc_table[22] = {0, 2, 4, 7, 11, 16, 22, 29, 37, 45, 53, 60, 67, 73, 78, 82, 86, 89, 92, 95, 97, 100};
 
 static float adc_filt = 0.0f;
 static uint16_t volt = 0; //mV
@@ -30,6 +32,12 @@ bool batteryIsChargeCritical()
 
 uint8_t batteryGetCharge()
 {
-  int32_t tmp = map(volt, volt_low, volt_high, 0, 100);
-  return constrain(tmp, 0, 100);
+  if(volt < volt_low) return 0;
+  if(volt >= volt_high) return 100;
+
+  uint8_t idx = (volt - volt_low) / volt_step;
+  uint16_t offset = (volt - volt_low) % volt_step;
+  uint8_t delta = ((soc_table[idx + 1] - soc_table[idx]) * offset) / volt_step;
+
+  return soc_table[idx] + delta;
 }
